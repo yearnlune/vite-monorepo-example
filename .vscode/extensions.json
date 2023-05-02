@@ -1,3 +1,8 @@
 {
-  "recommendations": ["arcanis.vscode-zipfs", "Vue.volar"]
+  "recommendations": [
+    "arcanis.vscode-zipfs",
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
 }

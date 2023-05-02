@@ -11,7 +11,7 @@ export class HealthController {
   constructor(
     private readonly config: ConfigService,
     private readonly health: HealthCheckService,
-    private readonly http: HttpHealthIndicator
+    private readonly http: HttpHealthIndicator,
   ) {}
 
   @Get('/health')
@@ -23,7 +23,7 @@ export class HealthController {
           'http',
           `http://localhost:${
             this.config.get<string>('HTTP_PORT') ?? 8080
-          }/_/check`
+          }/_/check`,
         ),
     ]);
   }

@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from '@/app.module';
 
 function createSwaggerDocument(app: INestApplication) {
   const document = SwaggerModule.createDocument(
@@ -9,7 +9,7 @@ function createSwaggerDocument(app: INestApplication) {
     new DocumentBuilder()
       .setTitle('vite-monorepo-backend')
       .setDescription('vite-monorepo-backend API')
-      .build()
+      .build(),
   );
 
   SwaggerModule.setup('/_/swagger', app, document);
