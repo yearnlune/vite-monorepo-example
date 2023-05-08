@@ -4,6 +4,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

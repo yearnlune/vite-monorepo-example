@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 8080,
+    port: parseInt(process.env.HTTP_PORT || '8080'),
   },
   plugins: [
+    tsconfigPaths(), // 
     ...VitePluginNode({
       adapter: 'nest',
       appPath: './src/main.ts',

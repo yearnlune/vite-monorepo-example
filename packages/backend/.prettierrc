@@ -5,8 +5,18 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "printWidth": 80,
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["^@nestjs/(.*)$", "<THIRD_PARTY_MODULES>", "^@(.*)", "^[./]"],
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports"
+  ],
+  "importOrder": [
+    "^@nestjs/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@(.*)",
+    "^[./]"
+  ],
   "importOrderSortSpecifiers": true,
-  "importOrderParserPlugins": ["typescript", "decorators-legacy"]
+  "importOrderParserPlugins": [
+    "typescript",
+    "decorators-legacy"
+  ]
 }
