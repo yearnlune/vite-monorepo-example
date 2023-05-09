@@ -1,8 +1,8 @@
 import { Logger } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { Base } from '@/domain/base.schema';
-import { EmptyUpdateException } from '@/exception/emptyUpdate.exception';
-import { ItemNotFound } from '@/exception/itemNotFound.exception';
+import { EmptyUpdateException } from '@/exception/empty-update.exception';
+import { ItemNotFound } from '@/exception/item-not-found.exception';
 import { CommonSort } from '@example/common';
 
 export class DomainService<T extends Base> {
@@ -104,7 +104,7 @@ export class DomainService<T extends Base> {
     update.updatedAt = new Date();
 
     return this.injectModel
-      .findByIdAndUpdate(id, { $set: update }, { upsert: upsert })
+      .findByIdAndUpdate(id, { $set: update }, { new: true, upsert: upsert })
       .then(
         (item) =>
           item?.toDto() ??

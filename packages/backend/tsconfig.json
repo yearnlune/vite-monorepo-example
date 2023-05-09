@@ -3,26 +3,22 @@
     "target": "ESNext",
     "module": "ESNext",
     "skipLibCheck": true,
-
     "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@config/*": ["./src/config/*"]
+      "@config/*": ["./src/config/*"],
+      "@test/*": ["./test/*"]
     },
-
-    /* Bundler mode */
     "moduleResolution": "node16",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -30,6 +26,6 @@
     "removeComments": true,
     "strictPropertyInitialization": false
   },
-  "include": ["src"],
+  "include": ["src", "test"],
   "references": [{ "path": "../common" }]
 }
