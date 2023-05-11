@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { Base } from '@/domain/base.schema';
 import { EmptyUpdateException } from '@/exception/empty-update.exception';
-import { ItemNotFound } from '@/exception/item-not-found.exception';
+import { ItemNotFoundException } from '@/exception/item-not-found.exception';
 import { CommonSort } from '@example/common';
 
 export class DomainService<T extends Base> {
@@ -40,7 +40,7 @@ export class DomainService<T extends Base> {
       .findOne(query)
       .then((item) => {
         return (
-          item?.toDto() ?? Promise.reject(new ItemNotFound(`'${id}' not found`))
+          item?.toDto() ?? Promise.reject(new ItemNotFoundException(`'${id}' not found`))
         );
       })
       .catch((e) => {
@@ -108,7 +108,7 @@ export class DomainService<T extends Base> {
       .then(
         (item) =>
           item?.toDto() ??
-          Promise.reject(new ItemNotFound(`'${id}' not found`)),
+          Promise.reject(new ItemNotFoundException(`'${id}' not found`)),
       )
       .catch((e) => {
         this.log.error(e);

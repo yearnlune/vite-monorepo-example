@@ -3,6 +3,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "node",
+    "composite": true,
     "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
