@@ -8,7 +8,7 @@ export default defineConfig({
     port: parseInt(process.env.HTTP_PORT || '8080'),
   },
   plugins: [
-    tsconfigPaths(), // 
+    tsconfigPaths(),
     ...VitePluginNode({
       adapter: 'nest',
       appPath: './src/main.ts',
