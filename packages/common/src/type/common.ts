@@ -1,10 +1,11 @@
 import {
   IsAlphanumeric,
   IsMongoId,
-  IsNumberString,
+  IsNumber,
   IsOptional,
   IsUUID,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export type UUID36 = string;
 
@@ -24,10 +25,12 @@ export class CommonPagination {
   @IsOptional()
   sorts?: CommonSort[];
 
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   offset: number;
 
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   limit: number;
 }
 

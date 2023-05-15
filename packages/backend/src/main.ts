@@ -18,7 +18,7 @@ function createSwaggerDocument(app: INestApplication) {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   createSwaggerDocument(app);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   return app;
 }
 
