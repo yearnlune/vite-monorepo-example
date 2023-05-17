@@ -6,15 +6,18 @@ import {
   IsUUID,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type UUID36 = string;
 
 export type Nullable<T> = T | null;
 
 export class CommonSort {
+  @ApiProperty({ description: 'property name' })
   @IsAlphanumeric()
   property: string;
 
+  @ApiProperty({ description: 'sort direction' })
   direction: 'asc' | 'desc';
 }
 
@@ -40,6 +43,7 @@ export class UUID36Param {
 }
 
 export class ObjectIdParam {
+  @ApiProperty({ description: 'Object ID' })
   @IsMongoId()
   id: string;
 }
