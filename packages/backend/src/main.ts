@@ -19,6 +19,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   createSwaggerDocument(app);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.setGlobalPrefix('api');
+
   return app;
 }
 

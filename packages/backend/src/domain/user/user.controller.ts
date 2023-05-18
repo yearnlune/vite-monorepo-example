@@ -20,7 +20,7 @@ import {
 } from '@example/common';
 
 @ApiTags('User')
-@Controller()
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -33,7 +33,7 @@ export class UserController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Invalid user ID',
   })
-  @Get('api/users/:id')
+  @Get(':id')
   async findUser(@Param() param: ObjectIdParam) {
     return this.userService.findOne(param.id);
   }
@@ -44,7 +44,7 @@ export class UserController {
   })
   @ApiResponse({ status: HttpStatus.OK, type: UserDTO, isArray: true })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid param' })
-  @Get('api/users')
+  @Get()
   async findUsers(@Query() { search, sorts, offset, limit }: CommonPagination) {
     return this.userService.findAll(
       {
@@ -61,7 +61,7 @@ export class UserController {
     description: 'Returns a paginated list of users.',
   })
   @ApiResponse({ status: HttpStatus.CREATED, type: UserDTO })
-  @Post('api/users')
+  @Post()
   @HttpCode(201)
   async createUser(@Body() user: UpsertUserRequest) {
     return this.userService.create(user);
@@ -73,7 +73,7 @@ export class UserController {
   })
   @ApiResponse({ status: HttpStatus.OK, type: UserDTO })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid param' })
-  @Patch('api/users/:id')
+  @Patch(':id')
   async updateUser(
     @Param() param: ObjectIdParam,
     @Body() user: UpsertUserRequest,
@@ -90,7 +90,7 @@ export class UserController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Invalid user ID',
   })
-  @Delete('api/users/:id')
+  @Delete(':id')
   @HttpCode(204)
   async deleteUser(@Param() param: ObjectIdParam) {
     return this.userService.delete(param.id);

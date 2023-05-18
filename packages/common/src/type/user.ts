@@ -1,4 +1,11 @@
-import { IsDate, IsEmail, IsMongoId, IsNotEmpty, IsUrl } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsUrl,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDTO {
@@ -56,5 +63,6 @@ export class UpsertUserRequest {
 
   @ApiProperty({ example: 'https://github.com', required: false })
   @IsUrl()
+  @IsOptional()
   readonly homepage?: string;
 }
