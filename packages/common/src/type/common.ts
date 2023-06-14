@@ -37,6 +37,10 @@ export class CommonPagination {
   limit: number;
 }
 
+export class CommonPageResult {
+  items: any[];
+  total: number;
+}
 export class UUID36Param {
   @IsUUID()
   id: UUID36;

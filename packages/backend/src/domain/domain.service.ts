@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { Base } from '@/domain/base.schema';
 import { EmptyUpdateException } from '@/exception/empty-update.exception';
 import { ItemNotFoundException } from '@/exception/item-not-found.exception';
-import { CommonSort } from '@example/common';
+import { CommonPageResult, CommonSort } from '@example/common';
 
 export class DomainService<T extends Base> {
   private readonly injectModel: mongoose.Model<T>;
@@ -40,7 +40,8 @@ export class DomainService<T extends Base> {
       .findOne(query)
       .then((item) => {
         return (
-          item?.toDto() ?? Promise.reject(new ItemNotFoundException(`'${id}' not found`))
+          item?.toDto() ??
+          Promise.reject(new ItemNotFoundException(`'${id}' not found`))
         );
       })
       .catch((e) => {
@@ -63,25 +64,31 @@ export class DomainService<T extends Base> {
       sorts?: CommonSort[];
     },
     search?: Record<string, string>,
-  ): Promise<any[]> {
-    const query = { ...search, deleted: false };
-    const queryOptions: any = {};
-
-    if (options.sorts) {
-      queryOptions.sort = this.toSortQuery(options.sorts);
-    }
-
-    if (options.offset) {
-      queryOptions.skip = options.offset;
-    }
-
-    if (options.limit) {
-      queryOptions.limit = options.limit;
-    }
-
+  ): Promise<CommonPageResult> {
     return this.injectModel
-      .find(query, [], queryOptions)
-      .then((items) => items.map((item) => item.toDto()))
+      .aggregate()
+      .match({ ...search, deleted: false })
+      .facet({
+        items: [
+          {
+            $sort: this.toSortQuery(options.sorts),
+          },
+          {
+            $skip: options.offset * options.limit,
+          },
+          {
+            $limit: options.limit,
+          },
+        ],
+        total: [{ $count: 'count' }],
+      })
+      .addFields({ total: { $arrayElemAt: ['$total.count', 0] } })
+      .then((results: { items: T[]; total: number }[]) => {
+        return {
+          items: results[0].items,
+          total: results[0].total,
+        } as CommonPageResult;
+      })
       .catch((e) => {
         this.log.error(e);
         throw e;
@@ -92,7 +99,7 @@ export class DomainService<T extends Base> {
    * Updates a document by ID.
    *
    * @param id The ID of the document to update.
-   * @param any The document data to update.
+   * @param update The document data to update.
    * @param upsert If true, the document will be created if it does not exist.
    * @returns A promise that resolves to the document or rejects if the document does not exist.
    */

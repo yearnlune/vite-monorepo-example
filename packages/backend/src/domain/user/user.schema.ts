@@ -37,4 +37,16 @@ UserSchema.methods.toDto = function (this: UserDocument): UserDTO {
   };
 };
 
+export function toUserDto(user: UserDocument): UserDTO {
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    updatedAt: user.updatedAt,
+    bio: user.bio,
+    location: user.location,
+    homepage: user.homepage,
+  }
+}
+
 export { UserSchema };
